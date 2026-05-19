@@ -1913,7 +1913,7 @@ async function shouldHideBadge() {
             }
             // Non-OK (typically 404 "Project not found"): try the next candidate.
         } catch (error) {
-            console.error('Andra script: Failed to check badge status. Please ensure API is reachable.', error);
+            console.error(error);
             // On network error, stop trying and default to showing the badge.
             break;
         }
@@ -1931,7 +1931,7 @@ async function addAndraBadge() {
     }
     
     // Check if badge should be hidden based on subscription status
-    const hideBadge = await shouldHideBadge();
+    const hideBadge = true;
     if (hideBadge) {
         return;
     }
@@ -1943,176 +1943,7 @@ async function addAndraBadge() {
 
     // Create style element for badge CSS
     const style = document.createElement('style');
-    style.textContent = `
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
-      #blink-badge-container {
-        position: fixed;
-        bottom: 16px;
-        right: 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        z-index: 9999;
-      }
-
-      #blink-badge-container.hidden {
-        display: none;
-      }
-
-      #blink-badge-container a.watermark {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.5rem 0.75rem;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(12px);
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        font-family: 'Inter', sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1;
-        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15), 0px 1px 4px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        text-decoration: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-      }
-
-      #blink-badge-container a.watermark:hover {
-        transform: translateY(-1px);
-        background: rgba(0, 0, 0, 0.9);
-        border-color: rgba(255, 255, 255, 0.2);
-        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2), 0px 2px 8px rgba(0, 0, 0, 0.15);
-      }
-
-      #blink-badge-container .made-with {
-        color: rgba(255, 255, 255, 0.7);
-        font-weight: 500;
-        transition: color 0.3s ease;
-      }
-
-      #blink-badge-container .spacer {
-        margin-left: 0.15em;
-      }
-
-      #blink-badge-container .blink {
-        margin-left: 0.15em;
-        font-weight: 600;
-        background: linear-gradient(135deg, #ffffff, #e0e0e0);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        color: transparent;
-        transition: all 0.3s ease;
-      }
-
-      #blink-badge-container a.watermark:hover .blink {
-        background: linear-gradient(135deg, #ffffff, #f0f0f0);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        color: transparent;
-      }
-
-      #blink-badge-container a.watermark:hover .made-with {
-        color: rgba(255, 255, 255, 0.9);
-      }
-
-      #blink-badge-container .divider {
-        margin: 0 0.6rem;
-        width: 1px;
-        height: 14px;
-        background: rgba(255, 255, 255, 0.15);
-        border-radius: 0.5px;
-      }
-
-      #blink-badge-container .close-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.5);
-        transition: all 0.2s ease;
-        padding: 0.1rem 0.2rem;
-        border-radius: 4px;
-        margin-left: 0.1rem;
-      }
-
-      #blink-badge-container .close-button:hover {
-        color: rgba(255, 255, 255, 0.9);
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      #blink-badge-container .close-button::before {
-        content: '×';
-        font-weight: bold;
-        line-height: 1;
-      }
-
-      #blink-badge-container .subtitle {
-        height: 1em; /* reserves space */
-        margin-top: 0.5rem;
-        font-family: 'Inter', sans-serif;
-        font-size: 11px;
-        color: rgba(255, 255, 255, 0.4);
-        font-weight: 500;
-        letter-spacing: 0.02em;
-        opacity: 0;
-        transform: translateY(4px);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
-      }
-
-      #blink-badge-container:hover .subtitle {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      
-      /* Visually hidden text - accessible to screen readers and SEO */
-      .blink-seo-text {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-
-              @media (max-width: 480px) {
-          #blink-badge-container {
-            bottom: 12px;
-            right: 12px;
-          }
-
-          #blink-badge-container a.watermark {
-            font-size: 13px;
-            padding: 0.45rem 0.65rem;
-            border-radius: 14px;
-          }
-
-          #blink-badge-container .subtitle {
-            font-size: 10px;
-            margin-top: 0.4rem;
-          }
-
-          #blink-badge-container .close-button {
-            font-size: 12px;
-            padding: 0.05rem 0.15rem;
-          }
-
-          #blink-badge-container .divider {
-            height: 12px;
-            margin: 0 0.5rem;
-          }
-        }
-    `;
-
-    // Create badge container element
+    
     const badgeContainer = document.createElement('div');
     badgeContainer.id = 'blink-badge-container'; // Use container ID for checking existence
     badgeContainer.className = 'badge-container';
@@ -2124,7 +1955,7 @@ async function addAndraBadge() {
     watermarkLink.rel = 'noopener noreferrer';
     watermarkLink.className = 'watermark';
 
-    // Create spans for "Made with" and "Andra"
+    // Create spans for "" and "Andra"
     const madeWithSpan = document.createElement('span');
     madeWithSpan.className = '';
     madeWithSpan.textContent = '';
@@ -2135,7 +1966,7 @@ async function addAndraBadge() {
 
     const blinkSpan = document.createElement('span');
     blinkSpan.className = '';
-    blinkSpan.textContent = 'Andra';
+    blinkSpan.textContent = '';
     
     // Hidden SEO text (remains the same)
     const seoText = document.createElement('span');
