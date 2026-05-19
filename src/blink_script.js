@@ -1857,7 +1857,7 @@ var N = t => t.hasAttribute("data-blnk-id") || t.hasAttribute("data-component-pa
  * 7-day slug-rename grace window, when the old slug subdomain still serves
  * traffic via Cloudflare KV but no longer exists on the project row.
  */
-function getBlinkProjectContextForBadge() {
+function getAndraProjectContextForBadge() {
     let scriptProjectId = null;
     let scriptOrigin = 'https://blink.new';
     if (import.meta.url) {
@@ -1890,7 +1890,7 @@ async function shouldHideBadge() {
         return true;
     }
 
-    const { candidates, scriptOrigin } = getBlinkProjectContextForBadge();
+    const { candidates, scriptOrigin } = getAndraProjectContextForBadge();
 
     // Try candidates in order: hostname-derived id first (authoritative for this
     // deployment), then any script-baked id as a fallback for slug-rename grace
@@ -1913,7 +1913,7 @@ async function shouldHideBadge() {
             }
             // Non-OK (typically 404 "Project not found"): try the next candidate.
         } catch (error) {
-            console.error('Blink script: Failed to check badge status. Please ensure API is reachable.', error);
+            console.error('Andra script: Failed to check badge status. Please ensure API is reachable.', error);
             // On network error, stop trying and default to showing the badge.
             break;
         }
@@ -1923,8 +1923,8 @@ async function shouldHideBadge() {
     return false;
 }
 
-// Function to add the Blink attribution badge
-async function addBlinkBadge() {
+// Function to add the Andra attribution badge
+async function addAndraBadge() {
     // Only add the badge if not running inside an iframe and shouldn't be hidden
     if (window.top !== window.self) {
         return;
@@ -2124,23 +2124,23 @@ async function addBlinkBadge() {
     watermarkLink.rel = 'noopener noreferrer';
     watermarkLink.className = 'watermark';
 
-    // Create spans for "Made with" and "Blink"
+    // Create spans for "Made with" and "Andra"
     const madeWithSpan = document.createElement('span');
-    madeWithSpan.className = 'made-with';
-    madeWithSpan.textContent = 'Made with';
+    madeWithSpan.className = '';
+    madeWithSpan.textContent = '';
 
     const spacerSpan = document.createElement('span');
     spacerSpan.className = 'spacer';
     spacerSpan.textContent = ' ';
 
     const blinkSpan = document.createElement('span');
-    blinkSpan.className = 'blink';
-    blinkSpan.textContent = 'Blink';
+    blinkSpan.className = '';
+    blinkSpan.textContent = 'Andra';
     
     // Hidden SEO text (remains the same)
     const seoText = document.createElement('span');
     seoText.className = 'blink-seo-text';
-    seoText.textContent = "Blink - The world's #1 AI fullstack engineer for building beautiful and functional websites, web apps, and mobile apps. Create production-ready applications with modern design, animations, and complete user experience. Integrate easily with Supabase, Firebase, Stripe, and more. Publish your app to the web in one click.";
+    seoText.textContent = "Andra Car Centre";
     
     // Append spans to the link
     watermarkLink.appendChild(madeWithSpan);
@@ -2201,7 +2201,7 @@ async function addBlinkBadge() {
 }
 
 /** Script `src` may preserve ?projectId= when import.meta.url does not (some hosts / module loaders). Preview: *.sites.blink.new subdomain === project id. */
-function resolveBlinkAnalyticsProjectId() {
+function resolveAndraAnalyticsProjectId() {
     try {
         if (typeof import.meta !== 'undefined' && import.meta.url) {
             const fromMeta = new URL(import.meta.url).searchParams.get('projectId');
@@ -2238,13 +2238,13 @@ function resolveBlinkAnalyticsProjectId() {
 }
 
 // Track pageviews for hosted projects.
-// Only fires in standalone (non-iframe) mode — never inside the Blink editor.
-// Sets window.__BLINK_ANALYTICS_PRESENT so the Blink SDK skips the duplicate initial pageview.
+// Only fires in standalone (non-iframe) mode — never inside the Andra editor.
+// Sets window.__BLINK_ANALYTICS_PRESENT so the Andra SDK skips the duplicate initial pageview.
 async function trackPageView() {
-    var projectId = resolveBlinkAnalyticsProjectId();
+    var projectId = resolveAndraAnalyticsProjectId();
     if (!projectId) return;
 
-    // Signal to Blink SDK: boot script owns pageview tracking — don't double-count
+    // Signal to Andra SDK: boot script owns pageview tracking — don't double-count
     window.__BLINK_ANALYTICS_PRESENT = true;
 
     // Session ID scoped to browser tab (resets when tab closes)
@@ -2276,14 +2276,14 @@ async function trackPageView() {
 
 var ee = () => {
     if (window.top !== window.self) {
-        // Running inside an iframe (Blink editor)
+        // Running inside an iframe (Andra editor)
         M(); // URL change listener, Vite HMR error overlay
         H(); // Global error listeners
         k(); // Console interceptor
         G(); // Element selector/interaction logic
     } else {
         // Running as a standalone page
-        addBlinkBadge().catch(err => console.error('Blink script: Error adding Blink badge.', err));
+        addAndraBadge().catch(err => console.error('Andra script: Error adding Andra badge.', err));
         trackPageView().catch(() => {}); // Pageview analytics — fire and forget
     }
 };
