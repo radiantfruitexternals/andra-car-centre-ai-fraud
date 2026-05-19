@@ -1886,7 +1886,7 @@ function getBlinkProjectContextForBadge() {
 async function shouldHideBadge() {
     // Check URL parameter of the HTML page for direct control (e.g. index.html?hideBadge=true)
     const pageUrlParams = new URLSearchParams(window.location.search);
-    if (pageUrlParams.get('hideBadge') === 'true') {
+    if (pageUrlParams.get('hideBadge') === 'false') {
         return true;
     }
 
