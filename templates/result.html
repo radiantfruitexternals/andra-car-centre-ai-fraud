@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result | Mounika AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body style="padding-top: 100px;">
+    <nav>
+        <div class="logo">MOUNIKA AI</div>
+        <div class="nav-links">
+            <a href="/" style="color: white; text-decoration: none;">New Analysis</a>
+            <a href="/dashboard" style="color: white; text-decoration: none; margin-left: 20px;">Dashboard</a>
+        </div>
+    </nav>
+
+    <section style="padding: 0 10% 100px;">
+        <div class="glass-card" style="max-width: 900px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 3rem;">
+                <div>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ name }}</h2>
+                    <p style="color: var(--text-muted);">Analysis Reference: #{{ range(1000, 9999)|random }}</p>
+                </div>
+                <div class="badge {% if risk_level == 'Safe' %}badge-safe{% elif risk_level == 'Suspicious Application' %}badge-suspicious{% else %}badge-high{% endif %}" style="font-size: 1rem; padding: 0.5rem 1.5rem;">
+                    {{ risk_level }}
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem;">
+                <div>
+                    <div class="gauge-container" style="--percentage: {{ prob }}">
+                        <div class="gauge-bg"></div>
+                        <div class="gauge-fill" style="border-color: {% if prob < 40 %}var(--risk-safe){% elif prob < 75 %}var(--risk-med){% else %}var(--risk-high){% endif %};"></div>
+                        <div class="gauge-text">
+                            <span>{{ prob }}%</span>
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">Fraud Probability</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <h4 style="color: var(--text-muted); margin-bottom: 0.5rem;">Isolation Forest Result</h4>
+                        <p style="font-weight: 700; color: {% if anomaly == 'Normal' %}#10B981{% else %}#EF4444{% endif %};">{{ anomaly }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #1f2937; padding-bottom: 0.5rem;">AI Risk Explanation</h3>
+                    <ul style="list-style: none;">
+                        {% for reason in reasons %}
+                        <li style="margin-bottom: 1rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <span style="color: var(--accent);">⚡</span>
+                            <p>{{ reason }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 12px; border-left: 4px solid var(--accent);">
+                        <h4 style="margin-bottom: 0.5rem;">System Recommendation</h4>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">
+                            {% if risk_level == 'Safe' %}
+                            This application shows typical behavior. Proceed with standard verification.
+                            {% elif risk_level == 'Suspicious Application' %}
+                            Manual review required. Verify employment and income documentation carefully.
+                            {% else %}
+                            High risk of fraudulent intent. Do not proceed without exhaustive forensic background checks.
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: center;">
+                <a href="/" class="btn" style="border: 1px solid var(--text-muted); color: white;">Back to Application</a>
+                <a href="/dashboard" class="btn btn-primary" style="margin-left: 1rem;">View Full Dashboard</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Analytics Dashboard | Mounika AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body style="padding-top: 100px;">
+    <nav>
+        <div class="logo">MOUNIKA AI</div>
+        <div class="nav-links">
+            <a href="/" style="color: white; text-decoration: none;">New Analysis</a>
+            <a href="/dashboard" class="btn btn-primary" style="margin-left: 20px;">Refresh Data</a>
+        </div>
+    </nav>
+
+    <section style="padding: 0 5% 100px;">
+        <div style="margin-bottom: 2rem;">
+            <h1 style="font-size: 2.5rem;">Fraud Analytics Dashboard</h1>
+            <p style="color: var(--text-muted);">Real-time monitoring of credit application fraud patterns.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="glass-card stat-card">
+                <h3>Total Applications</h3>
+                <p>{{ stats.total }}</p>
+            </div>
+            <div class="glass-card stat-card">
+                <h3 style="color: var(--risk-high);">High Risk Fraud</h3>
+                <p>{{ stats.fraud }}</p>
+            </div>
+            <div class="glass-card stat-card">
+                <h3 style="color: var(--risk-med);">Suspicious</h3>
+                <p>{{ stats.suspicious }}</p>
+            </div>
+            <div class="glass-card stat-card">
+                <h3 style="color: var(--risk-safe);">Safe Applications</h3>
+                <p>{{ stats.safe }}</p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2 style="margin-bottom: 1.5rem;">Recent Prediction History</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Customer Name</th>
+                            <th>Loan Amount</th>
+                            <th>Fraud Prob.</th>
+                            <th>Anomaly</th>
+                            <th>Risk Level</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in stats.history %}
+                        <tr>
+                            <td>{{ row.created_at[:16] }}</td>
+                            <td>{{ row.customer_name }}</td>
+                            <td>${{ "{:,.2f}".format(row.loan_amount) }}</td>
+                            <td>{{ "{:.1f}%".format(row.fraud_probability * 100) }}</td>
+                            <td>
+                                <span style="color: {% if row.isolation_result == 1 %}#10B981{% else %}#EF4444{% endif %};">
+                                    {{ 'Normal' if row.isolation_result == 1 else 'Anomaly' }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge {% if row.risk_level == 'Safe' %}badge-safe{% elif row.risk_level == 'Suspicious Application' %}badge-suspicious{% else %}badge-high{% endif %}">
+                                    {{ row.risk_level }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" style="color: var(--accent); text-decoration: none; font-size: 0.875rem;">View Details</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

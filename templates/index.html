@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andra Car Centre | AI Fraud Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo">Andra AI</div>
+        <div class="nav-links">
+            <a href="#analyze" class="btn btn-primary">Start Analysis</a>
+            <a href="/dashboard" style="color: white; text-decoration: none; margin-left: 20px;">Dashboard</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>🚗 Andra CAR CENTRE</h1>
+        <p>Advanced AI Hybrid Fraud Engine using Logistic Regression and Isolation Forest to identify suspicious and fraudulent vehicle financing applications.</p>
+        <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+            <a href="#analyze" class="btn btn-primary">Analyze Application</a>
+            <a href="/dashboard" class="btn" style="border: 1px solid var(--accent); color: var(--accent);">View Dashboard</a>
+        </div>
+    </section>
+
+    <section id="analyze" class="form-container">
+        <div class="glass-card">
+            <h2 style="margin-bottom: 2rem; font-size: 2rem;">Application Analysis</h2>
+            <form action="/analyze" method="POST" class="grid-form">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" name="customer_name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" name="age" required placeholder="25">
+                </div>
+                <div class="form-group">
+                    <label>Annual Income ($)</label>
+                    <input type="number" name="income" required placeholder="50000">
+                </div>
+                <div class="form-group">
+                    <label>Credit Score</label>
+                    <input type="number" name="credit_score" required placeholder="700">
+                </div>
+                <div class="form-group">
+                    <label>Loan Amount ($)</label>
+                    <input type="number" name="loan_amount" required placeholder="20000">
+                </div>
+                <div class="form-group">
+                    <label>Existing Debt ($)</label>
+                    <input type="number" name="existing_debt" required placeholder="5000">
+                </div>
+                <div class="form-group">
+                    <label>Employment Years</label>
+                    <input type="number" name="employment_years" required placeholder="5">
+                </div>
+                <div class="form-group">
+                    <label>Previous Defaults</label>
+                    <input type="number" name="previous_defaults" required placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>Car Price ($)</label>
+                    <input type="number" name="car_price" required placeholder="25000">
+                </div>
+                <div class="form-group">
+                    <label>Loan Duration (Months)</label>
+                    <select name="loan_duration">
+                        <option value="12">12 Months</option>
+                        <option value="24">24 Months</option>
+                        <option value="36">36 Months</option>
+                        <option value="48">48 Months</option>
+                        <option value="60">60 Months</option>
+                        <option value="72">72 Months</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Down Payment ($)</label>
+                    <input type="number" name="down_payment" required placeholder="5000">
+                </div>
+                <div class="form-group">
+                    <label>Region</label>
+                    <select name="region">
+                        <option value="Urban">Urban</option>
+                        <option value="Rural">Rural</option>
+                        <option value="Semi-Urban">Semi-Urban</option>
+                    </select>
+                </div>
+                <div style="grid-column: 1 / -1; margin-top: 1rem;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Analyze Credit Application</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer style="padding: 4rem 10%; background: #050608; border-top: 1px solid #1f2937; text-align: center;">
+        <p style="color: var(--text-muted);">© 2026 Andra Car Centre AI - Enterprise Fraud Prevention</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

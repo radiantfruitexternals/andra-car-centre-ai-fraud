@@ -1,0 +1,225 @@
+:root {
+    --primary: #1E40AF;
+    --accent: #00D1FF;
+    --bg-dark: #050608;
+    --bg-card: #0D0F14;
+    --text-main: #FFFFFF;
+    --text-muted: #94A3B8;
+    --risk-safe: #10B981;
+    --risk-med: #F59E0B;
+    --risk-high: #EF4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+.glass-card {
+    background: rgba(13, 15, 20, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background: rgba(5, 6, 8, 0.8);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--accent);
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 10%;
+    background: radial-gradient(circle at center, #1E40AF22 0%, transparent 70%);
+}
+
+.hero h1 {
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #fff, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 700px;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+    box-shadow: 0 0 20px rgba(30, 64, 175, 0.4);
+}
+
+.form-container {
+    padding: 100px 10%;
+}
+
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.form-group input, .form-group select {
+    background: #111827;
+    border: 1px solid #374151;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+.gauge-container {
+    width: 250px;
+    height: 250px;
+    margin: 2rem auto;
+    position: relative;
+}
+
+.gauge-bg {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 15px solid #1f2937;
+    border-bottom-color: transparent;
+    transform: rotate(-45deg);
+}
+
+.gauge-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 15px solid var(--risk-high);
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    transform: rotate(calc(-45deg + (var(--percentage) * 1.8deg)));
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.gauge-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.gauge-text span {
+    display: block;
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    padding: 1.5rem;
+}
+
+.stat-card h3 {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #1f2937;
+}
+
+th {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-safe { background: rgba(16, 185, 129, 0.2); color: #10B981; }
+.badge-suspicious { background: rgba(245, 158, 11, 0.2); color: #F59E0B; }
+.badge-high { background: rgba(239, 68, 68, 0.2); color: #EF4444; }
+
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2.5rem; }
+    .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+}
