@@ -7,7 +7,7 @@ export const Footer = () => (
       <div className="text-center md:text-left">
         <div className="flex items-center gap-2 justify-center md:justify-start mb-4">
           <Car className="text-accent w-6 h-6" />
-          <span className="text-xl font-bold">MOUNIKA <span className="text-accent">AI</span></span>
+          <span className="text-xl font-bold">Andra <span className="text-accent">AI</span></span>
         </div>
         <p className="text-sm text-muted-foreground max-w-sm">
           Securing the future of automotive financing through hybrid artificial intelligence.
@@ -27,7 +27,7 @@ export const Footer = () => (
       </div>
     </div>
     <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-xs text-muted-foreground">
-      &copy; {new Date().getFullYear()} Mounika Car Centre AI Fraud Prevention System. All rights reserved.
+      &copy; {new Date().getFullYear()} Andra Car Centre AI Fraud Prevention System. All rights reserved.
     </div>
   </footer>
 );

@@ -18,7 +18,7 @@ export const Navbar = () => {
           <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform">
             <Car className="text-white w-6 h-6" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">MOUNIKA <span className="text-accent">AI</span></span>
+          <span className="text-xl font-bold tracking-tight text-white">Andra <span className="text-accent">AI</span></span>
         </Link>
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className="text-sm font-medium hover:text-accent transition-colors">Home</Link>

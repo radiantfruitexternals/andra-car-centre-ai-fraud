@@ -1,4 +1,4 @@
-# Mounika Car Centre AI Fraud Detection
+# Andra Car Centre AI Fraud Detection
 
 Enterprise-grade AI system for detecting car credit fraud using a hybrid engine of Logistic Regression and Isolation Forest.
 
